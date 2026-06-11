@@ -8,7 +8,7 @@ import type { AuthWeb3Response } from "@/types/api";
 export const useAuthLogin = () => {
 	return useMutation({
 		mutationFn: async (privyToken: string) => {
-			const { data } = await api.post<AuthWeb3Response>("/admin/web3", {
+			const { data } = await api.post<AuthWeb3Response>("/auth/admin/web3", {
 				token: privyToken,
 			});
 			return data;
