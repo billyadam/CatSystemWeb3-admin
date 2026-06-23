@@ -4,7 +4,7 @@ import api from "@/lib/api";
 import type { Request, RequestStatus } from "@/types/request";
 
 async function fetchRequest(id: string) {
-	const res = await api.get(`/admin/requests/${id}`);
+	const res = await api.get(`/requests/${id}`);
 	return res.data;
 }
 

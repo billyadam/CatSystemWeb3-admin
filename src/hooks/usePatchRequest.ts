@@ -8,7 +8,7 @@ type PatchRequestPayload = {
 };
 
 async function patchRequest({ id, action }: PatchRequestPayload) {
-	const res = await api.patch(`/admin/requests/${id}/accept`, { action });
+	const res = await api.patch(`/requests/${id}/accept`, { action });
 	return res.data;
 }
 
