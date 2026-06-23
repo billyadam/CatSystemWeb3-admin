@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ClipboardList, Clock, CheckCircle, XCircle, Wallet, RefreshCw } from "lucide-react";
-import { useGetRequests } from "@/hooks/useGetRequests";
+import { useGetListRequest } from "@/hooks/useGetRequest";
 import type { RequestStatus } from "@/types/request";
 
 type FilterTab = "all" | RequestStatus;
@@ -58,8 +58,8 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<FilterTab>("pending");
   const filterStatus = activeTab === "all" ? undefined : activeTab;
 
-  const { data: requests, isLoading, isError, refetch, isFetching } = useGetRequests(filterStatus);
-  const { data: allRequests } = useGetRequests(undefined);
+  const { data: requests, isLoading, isError, refetch, isFetching } = useGetListRequest(filterStatus);
+  const { data: allRequests } = useGetListRequest(undefined);
 
   const counts = {
     pending: allRequests?.filter((r) => r.status === "pending").length ?? 0,
