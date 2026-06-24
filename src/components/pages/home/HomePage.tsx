@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ClipboardList, Clock, CheckCircle, XCircle, Wallet, RefreshCw } from "lucide-react";
-import { useGetRequests } from "@/hooks/useGetRequests";
+import { useGetListRequest } from "@/hooks/useGetRequest";
 import type { RequestStatus } from "@/types/request";
 
 type FilterTab = "all" | RequestStatus;
@@ -55,11 +56,12 @@ function shortenWallet(wallet: string) {
 }
 
 export default function HomePage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<FilterTab>("pending");
   const filterStatus = activeTab === "all" ? undefined : activeTab;
 
-  const { data: requests, isLoading, isError, refetch, isFetching } = useGetRequests(filterStatus);
-  const { data: allRequests } = useGetRequests(undefined);
+  const { data: requests, isLoading, isError, refetch, isFetching } = useGetListRequest(filterStatus);
+  const { data: allRequests } = useGetListRequest(undefined);
 
   const counts = {
     pending: allRequests?.filter((r) => r.status === "pending").length ?? 0,
@@ -174,8 +176,9 @@ export default function HomePage() {
                       return (
                         <tr
                           key={req.id}
+                          onClick={() => router.push(`/admin/requests/${req.id}`)}
                           className={[
-                            "transition-colors hover:bg-gray-50/60",
+                            "cursor-pointer transition-colors hover:bg-blue-50/50",
                             idx !== requests.length - 1 ? "border-b border-gray-100" : "",
                           ].join(" ")}
                         >
@@ -232,7 +235,11 @@ export default function HomePage() {
                   const processedByName = req.approved_by_name || req.rejected_by_name || null;
                   const processedAt = req.approved_at || req.rejected_at || null;
                   return (
-                    <div key={req.id} className="p-4 space-y-2">
+                    <div
+                      key={req.id}
+                      onClick={() => router.push(`/admin/requests/${req.id}`)}
+                      className="p-4 space-y-2 cursor-pointer hover:bg-blue-50/50 transition-colors"
+                    >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-xs text-gray-400">#{req.id}</span>
                         <span
