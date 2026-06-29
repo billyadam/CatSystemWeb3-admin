@@ -6,6 +6,7 @@ export type Request = {
   user_name: string | null;
   requested_at: string;
   status: RequestStatus;
+  document_url: string | null;
   approved_by: string | null;
   approved_by_name: string | null;
   approved_at: string | null;

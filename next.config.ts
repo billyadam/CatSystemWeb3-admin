@@ -18,11 +18,19 @@ const nextConfig: NextConfig = {
 				pathname: "/uploads/**",
 			},
 			{
-				protocol:"https",
-				hostname:"catsystemweb3-backend-staging.up.railway.app",
+				protocol: "https",
+				hostname: "catsystemweb3-backend-staging.up.railway.app",
 				pathname: "/uploads/**",
-			}
+			},
 		],
+	},
+	webpack: (config) => {
+		// Allow Next.js to resolve .mjs files from pdfjs-dist (worker)
+		config.resolve.extensions = [
+			...(config.resolve.extensions ?? []),
+			".mjs",
+		];
+		return config;
 	},
 };
 
